@@ -8,6 +8,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 
 # ─── Board Class ─────────────────────────────────────────────────────────────
+# --- OOP Concept: Encapsulation (Bundling data and methods) ---
 class Board:
     def __init__(self):
         self.grid = [[" " for _ in range(3)] for _ in range(3)]
@@ -84,6 +85,7 @@ class Board:
 
 
 # ─── Player Classes ──────────────────────────────────────────────────────────
+# --- OOP Concept: Abstraction (Base Class for Players) ---
 class Player:
     def __init__(self, name, symbol):
         self.name = name
@@ -94,6 +96,7 @@ class Player:
         raise NotImplementedError
 
 
+# --- OOP Concept: Inheritance (from Player) & Polymorphism (Overriding get_move) ---
 class HumanPlayer(Player):
     def get_move(self, board):
         while True:
@@ -107,6 +110,7 @@ class HumanPlayer(Player):
                 print("  Please enter a number 1-9.")
 
 
+# --- OOP Concept: Inheritance (from Player) & Polymorphism (Overriding get_move) ---
 class AIPlayer(Player):
     """AI using Minimax algorithm — unbeatable!"""
 
@@ -150,6 +154,7 @@ class AIPlayer(Player):
 
 
 # ─── Game Class ──────────────────────────────────────────────────────────────
+# --- OOP Concept: Encapsulation & Composition (Has-A relationship with Board and Player) ---
 class Game:
     def __init__(self):
         self.board = Board()
@@ -159,6 +164,7 @@ class Game:
         self.score_file = "scores.json"
         self.all_scores = self.load_scores()
 
+    # --- File Handling: Reading Data ---
     def load_scores(self):
         if os.path.exists(self.score_file):
             try:
@@ -168,6 +174,7 @@ class Game:
                 return {}
         return {}
 
+    # --- File Handling: Writing Data ---
     def save_scores(self):
         if self.player1:
             self.all_scores[self.player1.name] = self.player1.score
