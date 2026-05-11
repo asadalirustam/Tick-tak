@@ -252,16 +252,50 @@ class Game:
 
             self.switch_player()
 
+    def view_history(self):
+        os.system("cls" if os.name == "nt" else "clear")
+        print("\n  ╔══════════════════════════╗")
+        print("  ║       📜 HISTORY         ║")
+        print("  ╚══════════════════════════╝\n")
+        
+        self.all_scores = self.load_scores()
+        if not self.all_scores:
+            print("  No history found yet.")
+        else:
+            print("  Leaderboard (Wins):")
+            for name, score in sorted(self.all_scores.items(), key=lambda x: x[1], reverse=True):
+                print(f"  {name}: {score}")
+                
+        input("\n  Press Enter to return to main menu...")
+        
+        #view history
     def play(self):
-        self.setup()
-
         while True:
-            self.play_round()
-
-            again = input("  Play again? (y/n): ").strip().lower()
-            if again != "y":
+            os.system("cls" if os.name == "nt" else "clear")
+            print("\n  ╔══════════════════════════╗")
+            print("  ║   🎮  TIC-TAC-TOE  🎮    ║")
+            print("  ╚══════════════════════════╝\n")
+            print("  Main Menu:")
+            print("  1. Play Game")
+            print("  2. View History")
+            print("  3. Exit")
+            
+            choice = input("\n  Enter choice (1-3): ").strip()
+            
+            if choice == "1":
+                self.setup()
+                while True:
+                    self.play_round()
+                    again = input("  Play again? (y/n): ").strip().lower()
+                    if again != "y":
+                        break
+            elif choice == "2":
+                self.view_history()
+            elif choice == "3":
                 print("\n  Thanks for playing!\n")
                 break
+            else:
+                input("  Invalid choice! Press Enter to try again...")
 
 
 # ─── Entry Point ─────────────────────────────────────────────────────────────
